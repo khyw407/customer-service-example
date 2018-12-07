@@ -1,11 +1,11 @@
-package repository;
+package com.test.springboot.repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import domain.Customer;
+import com.test.springboot.domain.Customer;
 
 public class CustomerRepository {
 

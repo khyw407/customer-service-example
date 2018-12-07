@@ -1,4 +1,4 @@
-package controller;
+package com.test.springboot.controller;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.Account;
-import domain.Customer;
-import feignclient.AccountClient;
-import repository.CustomerRepository;
+import com.test.springboot.domain.Account;
+import com.test.springboot.domain.Customer;
+import com.test.springboot.feignclient.AccountClient;
+import com.test.springboot.repository.CustomerRepository;
 
 @RestController
 public class CustomerController {
