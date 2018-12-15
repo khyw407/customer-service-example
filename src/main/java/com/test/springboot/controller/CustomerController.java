@@ -11,51 +11,44 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.springboot.domain.Account;
 import com.test.springboot.domain.Customer;
-import com.test.springboot.feignclient.AccountClient;
-import com.test.springboot.repository.CustomerRepository;
+import com.test.springboot.service.CustomerService;
 
 @RestController
 public class CustomerController {
 
 	@Autowired
-	AccountClient accountClient;
-	
-	@Autowired
-	CustomerRepository customerRepository;
+	CustomerService customerService;
 	
 	@PostMapping
 	public Customer add(@RequestBody Customer customer) {
-		return customerRepository.add(customer);
+		return customerService.add(customer);
 	}
 	
 	@PutMapping
 	public Customer update(@RequestBody Customer customer) {
-		return customerRepository.update(customer);
+		return customerService.update(customer);
 	}
 	
 	@GetMapping("/{id}")
 	public Customer findById(@PathVariable("id") Long id) {
-		return customerRepository.findById(id);
+		return customerService.findById(id);
 	}
 	
 	@GetMapping("/withAccounts/{id}")
 	public Customer findByIdWithAccounts(@PathVariable("id") Long id) throws Exception{
-		List<Account> accounts = accountClient.findByCustomer(id);
-		
-		Customer customer = customerRepository.findById(id);
-		customer.setAccounts(accounts);
+		Customer customer = customerService.findById(id);
+		customer.setAccounts(customerService.findCustomerAccounts(id));
 		return customer;
 	}
 	
 	@PostMapping("/ids")
 	public List<Customer> find(@RequestBody List<Long> ids){
-		return customerRepository.find(ids);
+		return customerService.find(ids);
 	}
 	
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable("id") Long id) {
-		customerRepository.delete(id);
+		customerService.delete(id);
 	}
 }
