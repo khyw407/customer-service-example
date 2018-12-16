@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: customer-service
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: spring-cloud-customer-service
   ports:
