@@ -51,7 +51,7 @@ public class CustomerService {
 	}
 	
 	@CachePut("accounts")
-	@HystrixCommand(fallbackMethod = "findCustomerAccountsFallback", 
+	@HystrixCommand(commandKey = "account-service.findByCustomer", fallbackMethod = "findCustomerAccountsFallback", 
 			commandProperties = {
 					@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "500"),
 					@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
@@ -60,7 +60,7 @@ public class CustomerService {
 					@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000")
 				})
 	public List<Account> findCustomerAccounts(Long id){
-		Account[] accounts = restTemplate.getForObject("http://account-service/customer/{customerId}", Account[].class, id);
+		Account[] accounts = restTemplate.getForObject("zuul.192.168.0.9.nip.io:32001/api/account/{customerId}", Account[].class, id);
 		return Arrays.stream(accounts).collect(Collectors.toList());
 	}
 	
@@ -73,5 +73,4 @@ public class CustomerService {
 			return new ArrayList<>();
 		}
 	}
-	
 }
