@@ -60,7 +60,7 @@ public class CustomerService {
 					@HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "10000")
 				})
 	public List<Account> findCustomerAccounts(Long id){
-		Account[] accounts = restTemplate.getForObject("zuul.192.168.0.9.nip.io:32001/api/account/{customerId}", Account[].class, id);
+		Account[] accounts = restTemplate.getForObject("http://zuul.192.168.0.9.nip.io:32001/api/account/{customerId}", Account[].class, id);
 		return Arrays.stream(accounts).collect(Collectors.toList());
 	}
 	
